@@ -1,37 +1,51 @@
 #include <stdio.h>
 #include "exercises.h"
 
+// WARNING len has ton of edge cases, use on controlled data only !
 #define len(x) (sizeof(x) / sizeof((x)[0]))
-typedef enum { false, true } bool;
+typedef enum { false, true } bool; // bool enum to allow user-friendly boolean operations in c
 
-const static int exercises[] = {1, 3, 7, 12};
+// defines an exercise by number and a pointer to it's function
+typedef struct Exercise {
+	int num;
+	int (*ptrFnEx)(int, char* []); // pointer (ptr) to a function (fn) for the exercise (ex)
+} Exercise;
 
-bool isValidExercise(int ex)
+// array of exercise structs for querying and executing the code for the relevant exercise
+const static Exercise exercises[] = {
+	{1, &ex1},
+	{3, &ex3},
+	{7, &ex7},
+	{12, &ex12},
+};
+
+// returns the index for the exercise if the given int (ex) is the number corresponding to the exercise from the array exercises.
+// else it returns -1 indicating that no exercise by the int (ex) exists.
+int isValidExercise(int ex)
 {
-	int len = len(exercises);
-	for (int i = 0; i < len; i++)
+	for (int i = 0; i < len(exercises); i++)
 	{
-		if (exercises[i] == ex)
+		if (exercises[i].num == ex)
 		{
-			return true;
+			return i;
 		}
 	}
 
-	return false;
+	return -1;
 }
 
 int main(int argc, char* argv[])
 {
-	int i;
-	bool validInput = false;
+	int i, res = -1;
 
-	// TODO redo this by removing array & while with validfunc and use default switch case to GOTO to re-enter input for invalid input
-	while (!validInput)
+	// getting the index of the exercise to run
+	// also performs input validation
+	while (res == -1)
 	{
 		printf("enter the number of the exercise to run: ");
 		scanf_s("%d", &i);
-		
-		if (isValidExercise(i))
+		res = isValidExercise(i);
+		if (res > -1)
 		{
 			break;
 		}
@@ -39,35 +53,10 @@ int main(int argc, char* argv[])
 		printf("invalid exercise!\n\n");
 	}
 
-	int result = -100;
+	int exResult = -100; // execution (ex) result of the executed exercise function
+	exResult = (*exercises[res].ptrFnEx)(argc, argv);
 
-	switch (i)
-	{
-		case 1:
-			printf("executing exercise 1...\n");
-			result = ex1(argc, argv);
-			break;
 
-		case 3:
-			printf("executing exercise 3...\n");
-			result = ex3(argc, argv);
-			break;
-
-		case 7:
-			printf("executing exercise 7...\n");
-			result = ex7(argc, argv);
-			break;
-
-		case 12:
-			printf("executing exercise 12...\n");
-			result = ex12(argc, argv);
-			break;
-
-		default:
-			printf("attempted to execute invalid exercise!\n");
-			return -1;
-	}
-
-	printf("finished executing exercise with exit code: %d", result);
+	printf("finished executing exercise with exit code: %d", exResult);
 	return 0;
 }
