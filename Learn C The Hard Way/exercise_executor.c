@@ -4,7 +4,7 @@
 #define len(x) (sizeof(x) / sizeof((x)[0]))
 typedef enum { false, true } bool;
 
-const static int exercises[] = {1, 3, 7};
+const static int exercises[] = {1, 3, 7, 12};
 
 bool isValidExercise(int ex)
 {
@@ -25,6 +25,7 @@ int main(int argc, char* argv[])
 	int i;
 	bool validInput = false;
 
+	// TODO redo this by removing array & while with validfunc and use default switch case to GOTO to re-enter input for invalid input
 	while (!validInput)
 	{
 		printf("enter the number of the exercise to run: ");
@@ -55,6 +56,11 @@ int main(int argc, char* argv[])
 		case 7:
 			printf("executing exercise 7...\n");
 			result = ex7(argc, argv);
+			break;
+
+		case 12:
+			printf("executing exercise 12...\n");
+			result = ex12(argc, argv);
 			break;
 
 		default:

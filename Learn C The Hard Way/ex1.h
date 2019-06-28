@@ -1,5 +1,5 @@
 #pragma once
 
-extern int ex1(int argc, char* argv[]);
-extern int ex3(int argc, char* argv[]);
-extern int ex7(int argc, char* argv[]);
+int ex1(int argc, char* argv[]);
+int ex3(int argc, char* argv[]);
+int ex7(int argc, char* argv[]);

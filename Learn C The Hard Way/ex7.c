@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "exercises.h"
 
 int ex7(int argc, char* argv[])
@@ -16,7 +17,7 @@ int ex7(int argc, char* argv[])
 	printf("I have the initial %c.\n", initial);
 	printf("I have the first name %s.\n", firstName);
 	printf("I have the last name %s.\n", lastName);
-	printf("My whole name is %s %c. $s.\n", firstName, initial, lastName);
+	printf("My whole name is %s %c. %s.\n", firstName, initial, lastName);
 
 	int bugs = 100;
 	double bugRate = 1.2;
